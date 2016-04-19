@@ -2,42 +2,63 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
-set rtp+=D:/Vim/vimfiles/bundle/Vundle.vim/
-let path='D:/Vim/vimfiles/bundle'
-call vundle#begin(path)
+set rtp+=D:/vim/vimfiles/bundle/Vundle.vim/
+call vundle#begin('D:/vim/vimfiles/bundle')
 " alternatively, pass a path where Vundle should install plugins
 "let path = '~/some/path/here'
 "call vundle#rc(path)
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
+Plugin 'scrooloose/nerdtree'
+
+Plugin 'tpope/vim-surround'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'easymotion/vim-easymotion'
+Plugin 'gcmt/wildfire.vim'
+Plugin 'tpope/vim-commentary'
+Plugin 'godlygeek/tabular'
+
+Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'Shougo/neocomplete.vim.git'
+Plugin 'Shougo/neosnippet'
+Plugin 'Shougo/neosnippet-snippets'
+Plugin 'honza/vim-snippets'
+
+"""python""""""
+Plugin 'klen/python-mode'
+Plugin 'yssource/python.vim'
+Plugin 'python_match.vim'
+Plugin 'pythoncomplete'
+"""""""""""""""
+
+"""javascript"""
 Plugin 'elzr/vim-json'
-Plugin 'klen/python-mode', {'branch':'develop'}
+Plugin 'groenewege/vim-less'
+Plugin 'pangloss/vim-javascript'
+Plugin 'briancollins/vim-jst'
+Plugin 'kchmck/vim-coffee-script'
+"""""""""""
+
+Plugin 'tpope/vim-markdown'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'luochen1990/rainbow'
-"Plugin 'scrooloose/syntastic'
-"Plugin 'kien/ctrlp.vim'
-"Plugin 'tpope/vim-surround'
-"Plugin 'godlygeek/tabular'
 " git YouCompleteMe is not working well on windows.
-"Plugin 'Valloric/YouCompleteMe'
+" Plugin 'Valloric/YouCompleteMe'
 
-" Using the python jedi autocompletion for vim.
-Plugin 'davidhalter/jedi-vim'
 Plugin 'ervandew/supertab'
 Plugin 'jsbeautify'
 Plugin 'matchit.zip'
-Plugin 'The-NERD-Commenter'
 " 自动检测文件编码
 "Plugin 'FencView.vim'
 " vimwiki
 Plugin 'vimwiki'
 " 显示对齐线
-Plugin 'Indent-Guides'
-" 显示文件目录
-Plugin 'The-NERD-Tree'
+Plugin 'nathanaelkane/vim-indent-guides'
 
 " color theme
 Plugin 'altercation/vim-colors-solarized'
@@ -77,8 +98,8 @@ source $VIMRUNTIME/menu.vim
 set fileencodings=ucs-bom,utf-8,cp936,gb2312,gb18030,big5,euc-jp,euc-kr,latin1,
 if has("win32")
     "set guifont=Courier_New:h12:cANSI
-    set guifont=Inconsolata_for_Powerline:h15:cANSI
-    set guifontwide=Microsoft_YaHei_Mono:h11:cGB2312
+    set guifont=Inconsolata_for_Powerline:h19:cANSI
+    set guifontwide=Microsoft_YaHei_Mono:h13:cGB2312
 endif
 
 set wrap           " 自动换行
@@ -204,12 +225,12 @@ let g:pymode_run_bind = '<leader>r'
 let g:pymode_folding  = 1
 let g:pymode_rope = 1
 
-let g:pymode_rope_completion = 1
-let g:pymode_rope_complete_on_dot = 1
-let g:pymode_rope_autoimport = 1
+let g:pymode_rope_completion = 0
+let g:pymode_rope_complete_on_dot = 0
+let g:pymode_rope_autoimport = 0
 let g:pymode_rope_autoimport_import_after_complete = 0
 let g:pymode_lint = 1
-let g:pymode_lint_write = 1
+let g:pymode_lint_on_write = 0
 let g:pymode_quickfix_minheight = 1
 let g:pymode_quickfix_maxheight = 3
 
@@ -244,13 +265,13 @@ let g:indent_guides_enable_on_vim_startup = 1
 "--------------------------------------------------------------------------------
 " Syntaxtic的设置
 "--------------------------------------------------------------------------------
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_aggregate_errors = 1
-"let g:syntastic_python_checkers = ['flake8']
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_aggregate_errors = 1
+let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
 "--------------------------------------------------------------------------------
 " The-NERD-tree :NERDTreeToggle
@@ -359,3 +380,7 @@ map <C-j> <C-w><Down>
 map <C-l> <C-w><Right>
 map <C-h> <C-w><Left>
 
+"--------------------------------------------------------------------------------
+" neocomplete 
+"--------------------------------------------------------------------------------
+let g:neocomplete#enable_at_startup = 1
