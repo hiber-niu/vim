@@ -229,10 +229,11 @@ let g:pymode_rope_completion = 0
 let g:pymode_rope_complete_on_dot = 0
 let g:pymode_rope_autoimport = 0
 let g:pymode_rope_autoimport_import_after_complete = 0
-let g:pymode_lint = 1
-let g:pymode_lint_on_write = 0
-let g:pymode_quickfix_minheight = 1
-let g:pymode_quickfix_maxheight = 3
+" turn off pymode syntax checking.
+let g:pymode_lint = 0
+"let g:pymode_lint_on_write = 0
+"let g:pymode_quickfix_minheight = 1
+"let g:pymode_quickfix_maxheight = 3
 
 
 "--------------------------------------------------------------------------------
@@ -265,9 +266,6 @@ let g:indent_guides_enable_on_vim_startup = 1
 "--------------------------------------------------------------------------------
 " Syntaxtic的设置
 "--------------------------------------------------------------------------------
-let g:syntastic_check_on_open = 1
-let g:syntastic_aggregate_errors = 1
-let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
