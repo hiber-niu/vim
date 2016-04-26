@@ -41,7 +41,6 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'briancollins/vim-jst'
 Plugin 'kchmck/vim-coffee-script'
 """""""""""
-Plugin 'plasticboy/vim-markdown'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'terryma/vim-multiple-cursors'
@@ -107,6 +106,7 @@ set tabstop=4       " 设置tab键的宽度
 set backspace=2     " 设置退格键可用
 set nu!             " 显示行号
 set linebreak       " 整词换行
+autocmd TextChanged,TextChangedI <buffer> silent write " 文件改变时自动保存"
 set whichwrap=b,s,<,>,[,]       " 光标从行首和行末时可以跳到另一行去
 "set list                       " 显示制表符
 "set listchars = tab:>-,trail:- " 将制表符显示为'>---',将行尾空格显示为'-'
@@ -381,3 +381,5 @@ map <C-h> <C-w><Left>
 " neocomplete 
 "--------------------------------------------------------------------------------
 let g:neocomplete#enable_at_startup = 1
+
+
