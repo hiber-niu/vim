@@ -34,14 +34,10 @@ Bundle 'gmarik/vundle'
 Bundle 'scrooloose/nerdtree'
 " Code commenter
 Bundle 'scrooloose/nerdcommenter'
-" Class/module browser
-Bundle 'majutsushi/tagbar'
 " Code and files fuzzy finder
 Bundle 'kien/ctrlp.vim'
 " Extension to ctrlp, for fuzzy command finder
 Bundle 'fisadev/vim-ctrlp-cmdpalette'
-" Zen coding
-Bundle 'mattn/emmet-vim'
 " Git integration
 Bundle 'motemen/git-vim'
 " Tab list panel
@@ -65,20 +61,10 @@ Bundle 'michaeljsmith/vim-indent-object'
 " operators, highlighting, run and ipdb breakpoints)
 Bundle 'klen/python-mode'
 " Better autocompletion
-Bundle 'Shougo/neocomplcache.vim'
+Bundle 'Shougo/neocomplete.vim'
 " Snippets manager (SnipMate), dependencies, and snippets repo
-Bundle 'MarcWeber/vim-addon-mw-utils'
-Bundle 'tomtom/tlib_vim'
+Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
-Bundle 'garbas/vim-snipmate'
-" Git/mercurial/others diff icons on the side of the file lines
-Bundle 'mhinz/vim-signify'
-" Automatically sort python imports
-Bundle 'fisadev/vim-isort'
-" Drag visual blocks arround
-Bundle 'fisadev/dragvisuals.vim'
-" Window chooser
-Bundle 't9md/vim-choosewin'
 " Python and other languages code checker
 Bundle 'scrooloose/syntastic'
 " Paint css colors with the real color
@@ -97,8 +83,6 @@ Bundle 'IndexedSearch'
 " XML/HTML tags navigation
 Bundle 'matchit.zip'
 " Yank history navigation
-Bundle 'YankRing.vim'
-
 Plugin 'easymotion/vim-easymotion'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'luochen1990/rainbow'
@@ -142,11 +126,6 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 
-" tab length exceptions on some file types
-autocmd FileType html setlocal shiftwidth=4 tabstop=4 softtabstop=4
-autocmd FileType htmldjango setlocal shiftwidth=4 tabstop=4 softtabstop=4
-autocmd FileType javascript setlocal shiftwidth=4 tabstop=4 softtabstop=4
-
 " always show status bar
 set ls=2
 
@@ -173,8 +152,7 @@ set guioptions-=r   "隐藏右边的滚动条
 set guioptions-=L   "隐藏左边滚动条
 
 set textwidth=80    "80列自动添加换行符
-set formatoptions+=mM "中文也自动换行
-
+set formatoptions+=tmM "中文也自动换行
 
 " automaximize windo when startup
 if has('win32')
@@ -402,32 +380,83 @@ let g:pymode_lint_signs = 0
 " don't fold python code on open
 let g:pymode_folding = 0
 " don't load rope by default. Change to 1 to use rope
-let g:pymode_rope = 1
+let g:pymode_rope = 0
 " open definitions on same window, and custom mappings for definitions and
 " occurrences
 let g:pymode_rope_goto_definition_bind = ',d'
 
-" NeoComplCache ------------------------------
+" NeoComplete ------------------------------
+"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
-" most of them not documented because I'm not sure how they work
-" (docs aren't good, had to do a lot of trial and error to make 
-" it play nice)
-let g:neocomplcache_enable_at_startup = 1
-let g:neocomplcache_enable_ignore_case = 1
-let g:neocomplcache_enable_smart_case = 1
-let g:neocomplcache_enable_auto_select = 1
-let g:neocomplcache_enable_fuzzy_completion = 1
-let g:neocomplcache_enable_camel_case_completion = 1
-let g:neocomplcache_enable_underbar_completion = 1
-let g:neocomplcache_fuzzy_completion_start_length = 1
-let g:neocomplcache_auto_completion_start_length = 1
-let g:neocomplcache_manual_completion_start_length = 1
-let g:neocomplcache_min_keyword_length = 1
-let g:neocomplcache_min_syntax_length = 1
-" complete with workds from any opened file
-let g:neocomplcache_same_filetype_lists = {}
-let g:neocomplcache_same_filetype_lists._ = '_'
+" Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
+        \ }
 
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? "\<C-y>" : "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+
+" AutoComplPop like behavior.
+"let g:neocomplete#enable_auto_select = 1
+
+" Shell like behavior(not recommended).
+"set completeopt+=longest
+"let g:neocomplete#enable_auto_select = 1
+"let g:neocomplete#disable_auto_complete = 1
+"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+" For perlomni.vim setting.
+" https://github.com/c9s/perlomni.vim
+let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 " TabMan ------------------------------
 
 " mappings to toggle display, and to focus on it
@@ -464,13 +493,6 @@ highlight DiffChange        cterm=bold ctermbg=none ctermfg=227
 highlight SignifySignAdd    cterm=bold ctermbg=237  ctermfg=119
 highlight SignifySignDelete cterm=bold ctermbg=237  ctermfg=167
 highlight SignifySignChange cterm=bold ctermbg=237  ctermfg=227
-
-" Window Chooser ------------------------------
-
-" mapping
-nmap  -  <Plug>(choosewin)
-" show big letters
-let g:choosewin_overlay_enable = 1
 
 " Airline ------------------------------
 
@@ -519,3 +541,8 @@ nmap <Leader>L <Plug>(easymotion-overwin-line)
 map  <Leader>w <Plug>(easymotion-bd-w)
 nmap <Leader>w <Plug>(easymotion-overwin-w)
 
+" Ultisnips----------------------------------------------
+"
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
