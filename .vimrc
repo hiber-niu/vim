@@ -53,6 +53,8 @@ Bundle 'rosenfeld/conque-term'
 Bundle 'fisadev/FixedTaskList.vim'
 " Surround
 Bundle 'tpope/vim-surround'
+" table
+Bundle 'dhruvasagar/vim-table-mode'
 " Autoclose
 Bundle 'Townk/vim-autoclose'
 " Indent text object
@@ -380,12 +382,12 @@ let g:syntastic_check_on_wq = 0
 let g:pymode_lint_on_write = 0
 let g:pymode_lint_signs = 0
 " don't fold python code on open
-let g:pymode_folding = 0
+let g:pymode_folding = 1
 " don't load rope by default. Change to 1 to use rope
 let g:pymode_rope = 0
 " open definitions on same window, and custom mappings for definitions and
 " occurrences
-let g:pymode_rope_goto_definition_bind = ',d'
+"let g:pymode_rope_goto_definition_bind = ',d'
 
 " NeoComplete ------------------------------
 "Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
@@ -437,8 +439,8 @@ let g:neocomplete#enable_auto_select = 1
 
 " Shell like behavior(not recommended).
 "set completeopt+=longest
-"let g:neocomplete#disable_auto_complete = 1
-"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+let g:neocomplete#disable_auto_complete = 1
+inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
 
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
