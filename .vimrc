@@ -122,7 +122,7 @@ source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
 
 set fileencodings=ucs-bom,utf-8,cp936,gb2312,gb18030,big5,euc-jp,euc-kr,latin1,
-set guifont=Monospace\ 17
+set guifont=Monospace\ 19
 
 " tabs and spaces handling
 set expandtab
