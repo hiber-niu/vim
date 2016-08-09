@@ -138,7 +138,11 @@ set incsearch
 " highlighted search results
 set hlsearch
 
-set autochdir  " 自动设置目录为正在编辑的文件所在的目录
+"set autochdir "自动设置目录为正在编辑的文件所在的目录 
+"有些插件与这个命令会有冲突导致无法起作用，需要执行如下命令。
+autocmd BufEnter * lcd %:p:h
+
+
 " 删除文件尾部空行
 autocmd FileType ruby,python autocmd BufWritePre <buffer> :%s/\($\n\s*\)\+\%$//e
 
