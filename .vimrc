@@ -1,28 +1,16 @@
 " ============================================================================
-" Vundle initialization
-" Avoid modify this section, unless you are very sure of what you are doing
+set nocompatible              " be iMproved, required
+filetype off                  " required
 
-" no vi-compatible
-set nocompatible
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
 
-" Setting up Vundle - the vim plugin bundler
-let iCanHazVundle=1
-let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
-if !filereadable(vundle_readme)
-    echo "Installing Vundle..."
-    echo ""
-    silent !mkdir -p ~/.vim/bundle
-    silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
-    let iCanHazVundle=0
-endif
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
 
-filetype off
-
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-" let Vundle manage Vundle
-Bundle 'gmarik/vundle'
 
 " ============================================================================
 " Active plugins
@@ -31,61 +19,51 @@ Bundle 'gmarik/vundle'
 " Plugins from github repos:
 
 " Better file browser
-Bundle 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdtree'
 " Code commenter
-Bundle 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdcommenter'
 " Code and files fuzzy finder
-Bundle 'kien/ctrlp.vim'
-" Extension to ctrlp, for fuzzy command finder
-Bundle 'fisadev/vim-ctrlp-cmdpalette'
+Plugin 'ctrlpvim/ctrlp.vim'
 " Git integration
-Bundle 'motemen/git-vim'
+Plugin 'motemen/git-vim'
 " Tab list panel
-Bundle 'kien/tabman.vim'
+Plugin 'kien/tabman.vim'
 " Airline
-Bundle 'vim-airline/vim-airline'
-Bundle 'vim-airline/vim-airline-themes'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 " Terminal Vim with 256 colors colorscheme
-Bundle 'fisadev/fisa-vim-colorscheme'
+Plugin 'fisadev/fisa-vim-colorscheme'
 " Consoles as buffers
-Bundle 'rosenfeld/conque-term'
+Plugin 'rosenfeld/conque-term'
 " Pending tasks list
-Bundle 'fisadev/FixedTaskList.vim'
+Plugin 'fisadev/FixedTaskList.vim'
 " Surround
-Bundle 'tpope/vim-surround'
+Plugin 'tpope/vim-surround'
 " table
-Bundle 'dhruvasagar/vim-table-mode'
+Plugin 'dhruvasagar/vim-table-mode'
 " Autoclose
-Bundle 'Townk/vim-autoclose'
+Plugin 'Townk/vim-autoclose'
 " Indent text object
-Bundle 'michaeljsmith/vim-indent-object'
+Plugin 'michaeljsmith/vim-indent-object'
 " Handle TAB confilict of neocomplete and snippets
-Bundle 'ervandew/supertab'
+Plugin 'ervandew/supertab'
 " Python mode (indentation, doc, refactor, lints, code checking, motion and
 " operators, highlighting, run and ipdb breakpoints)
-Bundle 'klen/python-mode'
+Plugin 'klen/python-mode'
 " Better autocompletion
-Bundle 'Shougo/neocomplete.vim'
+" Plugin 'Shougo/neocomplete.vim'
 " Snippets manager (SnipMate), dependencies, and snippets repo
-Bundle 'SirVer/ultisnips'
-Bundle 'honza/vim-snippets'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
 " Python and other languages code checker
-Bundle 'scrooloose/syntastic'
+"Plugin 'scrooloose/syntastic'
 " Paint css colors with the real color
-Bundle 'lilydjwg/colorizer'
-" Relative numbering of lines (0 is the current line)
-" (disabled by default because is very intrusive and can't be easily toggled
-" on/off. When the plugin is present, will always activate the relative 
-" numbering every time you go to normal mode. Author refuses to add a setting 
-" to avoid that)
-" Bundle 'myusuf3/numbers.vim'
-
-" Plugins from vim-scripts repos:
+Plugin 'lilydjwg/colorizer'
 
 " Search results counter
-Bundle 'IndexedSearch'
+Plugin 'IndexedSearch'
 " XML/HTML tags navigation
-Bundle 'matchit.zip'
+Plugin 'matchit.zip'
 " Yank history navigation
 Plugin 'easymotion/vim-easymotion'
 Plugin 'terryma/vim-multiple-cursors'
@@ -96,24 +74,15 @@ Plugin 'gcmt/wildfire.vim'
 " color theme
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'tomasr/molokai'
-Bundle 'Wombat'
+Plugin 'Wombat'
 
-" ============================================================================
-" Install plugins the first time vim runs
-
-if iCanHazVundle == 0
-    echo "Installing Bundles, please ignore key map error messages"
-    echo ""
-    :BundleInstall
-endif
+call vundle#end()            " required
+filetype plugin indent on    " required
 
 " ============================================================================
 " Vim settings and mappings
 " You can edit them as you wish
-
-" allow plugins by file type (required for plugins!)
-filetype plugin on
-filetype indent on
+set shell=/bin/bash
 
 set encoding=utf-8
 set langmenu=zh_CN.UTF-8
@@ -122,7 +91,7 @@ source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
 
 set fileencodings=ucs-bom,utf-8,cp936,gb2312,gb18030,big5,euc-jp,euc-kr,latin1,
-set guifont=Monospace\ 19
+set guifont=Monospace\ 18
 
 " tabs and spaces handling
 set expandtab
@@ -164,10 +133,12 @@ set formatoptions+=tmM "中文也自动换行
 let autosave=30     " 30s自动保存 
 
 " automaximize windo when startup
-if has('win32')
-    au GUIEnter * simalt ~x
-else
-    set lines=999 columns=999
+if has("gui_running")
+    if has('win32')
+        au GUIEnter * simalt ~x
+    else
+        set lines=999 columns=999
+    endif
 endif
 
 "--------------------------------------------------------------------------------
@@ -215,7 +186,10 @@ endif
 
 " colors for gvim
 if has('gui_running')
-    colorscheme wombat
+    "colorscheme wombat
+    colorscheme molokai
+    set background=dark
+    "colorscheme solarized
 endif
 
 " when scrolling, keep cursor 3 lines away from screen border
@@ -368,139 +342,56 @@ let g:ctrlp_custom_ignore = {
 " show list of errors and warnings on the current file
 "nmap <leader>e :Errors<CR>
 " check also when just opened the file
-let g:syntastic_check_on_open = 1
-" don't put icons on the sign column (it hides the vcs status icons of signify)
-let g:syntastic_enable_signs = 0
-" custom icons (enable them if you use a patched font, and enable the previous 
-" setting)
-"let g:syntastic_error_symbol = '✗'
-"let g:syntastic_warning_symbol = '⚠'
-"let g:syntastic_style_error_symbol = '✗'
-"let g:syntastic_style_warning_symbol = '⚠'
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_wq = 0
+"let g:syntastic_check_on_open = 1
+"" don't put icons on the sign column (it hides the vcs status icons of signify)
+"let g:syntastic_enable_signs = 0
+"" custom icons (enable them if you use a patched font, and enable the previous 
+"" setting)
+""let g:syntastic_error_symbol = '✗'
+""let g:syntastic_warning_symbol = '⚠'
+""let g:syntastic_style_error_symbol = '✗'
+""let g:syntastic_style_warning_symbol = '⚠'
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_wq = 0
 
 " Python-mode ------------------------------
+let g:pymode = 1
+" Trim unused white spaces on save   
+let g:pymode_trim_whitespaces = 1
 
-" don't use linter, we use syntastic for that
-let g:pymode_lint_on_write = 0
-let g:pymode_lint_signs = 0
-" don't fold python code on open
-let g:pymode_folding = 0
-" don't load rope by default. Change to 1 to use rope
-let g:pymode_rope = 0
-" open definitions on same window, and custom mappings for definitions and
-" occurrences
-"let g:pymode_rope_goto_definition_bind = ',d'
-
-" NeoComplete ------------------------------
-"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
-" Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-        \ }
-
-" Define keyword.
-if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
-endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-" Plugin key-mappings.
-inoremap <expr><C-g>     neocomplete#undo_completion()
-inoremap <expr><C-l>     neocomplete#complete_common_string()
-
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? "\<C-y>" : "\<CR>"
-endfunction
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
-
-" AutoComplPop like behavior.
-let g:neocomplete#enable_auto_select = 1
-
-" Shell like behavior(not recommended).
-"set completeopt+=longest
-let g:neocomplete#disable_auto_complete = 1
-inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
-
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-" Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
-endif
-"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
-" For perlomni.vim setting.
-" https://github.com/c9s/perlomni.vim
-let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-" TabMan ------------------------------
-
-" mappings to toggle display, and to focus on it
-let g:tabman_toggle = 'tl'
-let g:tabman_focus  = 'tf'
-
-" Autoclose ------------------------------
-
-" Fix to let ESC work as espected with Autoclose plugin
-let g:AutoClosePumvisible = {"ENTER": "\<C-Y>", "ESC": "\<ESC>"}
-
-" DragVisuals ------------------------------
-
-" mappings to move blocks in 4 directions
-vmap <expr> <S-M-LEFT> DVB_Drag('left')
-vmap <expr> <S-M-RIGHT> DVB_Drag('right')
-vmap <expr> <S-M-DOWN> DVB_Drag('down')
-vmap <expr> <S-M-UP> DVB_Drag('up')
-" mapping to duplicate block
-vmap <expr> D DVB_Duplicate()
-
-" Signify ------------------------------
-
-" this first setting decides in which order try to guess your current vcs
-" UPDATE it to reflect your preferences, it will speed up opening files
-let g:signify_vcs_list = [ 'git', 'hg' ]
-" mappings to jump to changed blocks
-nmap <leader>sn <plug>(signify-next-hunk)
-nmap <leader>sp <plug>(signify-prev-hunk)
-" nicer colors
-highlight DiffAdd           cterm=bold ctermbg=none ctermfg=119
-highlight DiffDelete        cterm=bold ctermbg=none ctermfg=167
-highlight DiffChange        cterm=bold ctermbg=none ctermfg=227
-highlight SignifySignAdd    cterm=bold ctermbg=237  ctermfg=119
-highlight SignifySignDelete cterm=bold ctermbg=237  ctermfg=167
-highlight SignifySignChange cterm=bold ctermbg=237  ctermfg=227
+" Setup default python options     
+let g:pymode_options = 1
+let g:pymode_python = 'python3'
+" Enable pymode folding                           
+let g:pymode_folding = 1
+" Enable pymode-motion                                         *'g:pymode_motion'*
+let g:pymode_motion = 1
+" Turn on the run code script                                     *'g:pymode_run'*
+let g:pymode_run = 1
+" Binds keys to run python code                              *'g:pymode_run_bind'*
+let g:pymode_run_bind = '<leader>r'
+" Turn on code checking                                          *'g:pymode_lint'*
+let g:pymode_lint = 1
+" Check code on every save (if file has been modified)  *'g:pymode_lint_on_write'*
+let g:pymode_lint_on_write = 1
+" E.g. "E501,W002", "E2,W" (Skip all Warnings and Errors that starts with E2) and etc
+let g:pymode_lint_ignore = "W"
+" Auto open cwindow (quickfix) if any errors have been found
+let g:pymode_lint_cwindow = 1
+let g:pymode_quickfix_minheight = 1
+let g:pymode_quickfix_maxheight = 3
+" Turn on the rope script                                        *'g:pymode_rope'*
+let g:pymode_rope = 1
+" Enable searching for |.ropeproject| in parent directories
+let g:pymode_rope_lookup_project = 0
+" Turn on code completion support in the plugin       *'g:pymode_rope_completion'*
+let g:pymode_rope_completion = 1
+" Turn on autocompletion when typing a period
+let g:pymode_rope_complete_on_dot = 1
+" Keymap for autocomplete                        *'g:pymode_rope_completion_bind'*
+let g:pymode_rope_completion_bind = '<C-Space>'
+let g:pymode_rope_goto_definition_bind = ',d'
 
 " Airline ------------------------------
 
@@ -522,8 +413,7 @@ au FileType qf call AdjustWindowHeight(1, 2)
 function! AdjustWindowHeight(minheight, maxheight)
   exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
 endfunction
-
-
+"
 "--------------------------------------------------------------------------------
 " 在使用:bnext切换时排除quickfix
 "--------------------------------------------------------------------------------
