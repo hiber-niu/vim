@@ -1,83 +1,73 @@
 " ============================================================================
-set nocompatible              " be iMproved, required
-filetype off                  " required
+" auto install plug.vim
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-
-
-" ============================================================================
-" Active plugins
-" You can disable or add new ones here:
+call plug#begin('~/.vim/plugged')
 
 " Plugins from github repos:
 
 " Better file browser
-Plugin 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree'
 " Code commenter
-Plugin 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdcommenter'
 " Code and files fuzzy finder
-Plugin 'ctrlpvim/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 " Git integration
-Plugin 'motemen/git-vim'
+Plug 'tpope/vim-fugitive'
 " Tab list panel
-Plugin 'kien/tabman.vim'
+Plug 'kien/tabman.vim'
 " Airline
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 " Terminal Vim with 256 colors colorscheme
-Plugin 'fisadev/fisa-vim-colorscheme'
+Plug 'fisadev/fisa-vim-colorscheme'
 " Consoles as buffers
-Plugin 'rosenfeld/conque-term'
+Plug 'rosenfeld/conque-term'
 " Pending tasks list
-Plugin 'fisadev/FixedTaskList.vim'
+Plug 'fisadev/FixedTaskList.vim'
 " Surround
-Plugin 'tpope/vim-surround'
+Plug 'tpope/vim-surround'
 " table
-Plugin 'dhruvasagar/vim-table-mode'
+Plug 'dhruvasagar/vim-table-mode'
 " Autoclose
-Plugin 'Townk/vim-autoclose'
+Plug 'Townk/vim-autoclose'
 " Indent text object
-Plugin 'michaeljsmith/vim-indent-object'
+Plug 'michaeljsmith/vim-indent-object'
 " Handle TAB confilict of neocomplete and snippets
-Plugin 'ervandew/supertab'
+Plug 'ervandew/supertab'
 " Python mode (indentation, doc, refactor, lints, code checking, motion and
 " operators, highlighting, run and ipdb breakpoints)
-Plugin 'klen/python-mode'
+Plug 'klen/python-mode'
 " Better autocompletion
-" Plugin 'Shougo/neocomplete.vim'
+" Plug 'Shougo/neocomplete.vim'
 " Snippets manager (SnipMate), dependencies, and snippets repo
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-" Python and other languages code checker
-"Plugin 'scrooloose/syntastic'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'w0rp/ale'
 " Paint css colors with the real color
-Plugin 'lilydjwg/colorizer'
+Plug 'lilydjwg/colorizer'
 
-" Search results counter
-Plugin 'IndexedSearch'
 " XML/HTML tags navigation
-Plugin 'matchit.zip'
+Plug 'vim-scripts/matchit.zip'
 " Yank history navigation
-Plugin 'easymotion/vim-easymotion'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'luochen1990/rainbow'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'gcmt/wildfire.vim'
+Plug 'easymotion/vim-easymotion'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'luochen1990/rainbow'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'gcmt/wildfire.vim'
+
+Plug 'justinmk/vim-sneak'
+Plug 'Chiel92/vim-autoformat'
 
 " color theme
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'tomasr/molokai'
-Plugin 'Wombat'
+Plug 'altercation/vim-colors-solarized'
+Plug 'tomasr/molokai'
 
-call vundle#end()            " required
-filetype plugin indent on    " required
+call plug#end()
 
 " ============================================================================
 " Vim settings and mappings
@@ -288,19 +278,6 @@ let g:rainbow_conf = {
 " show pending tasks list
 map <F2> :TaskList<CR>
 
-" Vim-debug ------------------------------
-
-" disable default mappings, have a lot of conflicts with other plugins
-let g:vim_debug_disable_mappings = 1
-" add some useful mappings
-map <F5> :Dbg over<CR>
-map <F6> :Dbg into<CR>
-map <F7> :Dbg out<CR>
-map <F8> :Dbg here<CR>
-map <F9> :Dbg break<CR>
-map <F10> :Dbg watch<CR>
-map <F11> :Dbg down<CR>
-map <F12> :Dbg up<CR>
 
 " CtrlP ------------------------------
 
@@ -337,24 +314,6 @@ let g:ctrlp_custom_ignore = {
   \ 'file': '\.pyc$\|\.pyo$',
   \ }
 
-" Syntastic ------------------------------
-
-" show list of errors and warnings on the current file
-"nmap <leader>e :Errors<CR>
-" check also when just opened the file
-"let g:syntastic_check_on_open = 1
-"" don't put icons on the sign column (it hides the vcs status icons of signify)
-"let g:syntastic_enable_signs = 0
-"" custom icons (enable them if you use a patched font, and enable the previous 
-"" setting)
-""let g:syntastic_error_symbol = '✗'
-""let g:syntastic_warning_symbol = '⚠'
-""let g:syntastic_style_error_symbol = '✗'
-""let g:syntastic_style_warning_symbol = '⚠'
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_wq = 0
-
 " Python-mode ------------------------------
 let g:pymode = 1
 " Trim unused white spaces on save   
@@ -372,7 +331,7 @@ let g:pymode_run = 1
 " Binds keys to run python code                              *'g:pymode_run_bind'*
 let g:pymode_run_bind = '<leader>r'
 " Turn on code checking                                          *'g:pymode_lint'*
-let g:pymode_lint = 1
+let g:pymode_lint = 0
 " Check code on every save (if file has been modified)  *'g:pymode_lint_on_write'*
 let g:pymode_lint_on_write = 1
 " E.g. "E501,W002", "E2,W" (Skip all Warnings and Errors that starts with E2) and etc
@@ -422,25 +381,97 @@ augroup qf
     autocmd FileType qf set nobuflisted
 augroup END
 
-" easymotion -------------------------------------------------------------------
-"
-" <Leader>f{char} to move to {char}
-map  <Leader>f <Plug>(easymotion-bd-f)
-nmap <Leader>f <Plug>(easymotion-overwin-f)
-
-" s{char}{char} to move to {char}{char}
-nmap s <Plug>(easymotion-overwin-f2)
-
-" Move to line
-map <Leader>L <Plug>(easymotion-bd-jk)
-nmap <Leader>L <Plug>(easymotion-overwin-line)
-
-" Move to word
-map  <Leader>w <Plug>(easymotion-bd-w)
-nmap <Leader>w <Plug>(easymotion-overwin-w)
-
 " Ultisnips----------------------------------------------
 "
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" ale config---------------------------------------------
+" Check Python files with flake8 and pylint.
+let b:ale_linters = ['flake8', 'pylint']
+" Fix Python files with autopep8 and yapf.
+let b:ale_fixers = ['autopep8', 'yapf']
+" Disable warnings about trailing whitespace for Python files.
+let b:ale_warn_about_trailing_whitespace = 0
+
+"始终开启标志列
+let g:ale_sign_column_always = 1
+let g:ale_set_highlights = 0
+"自定义error和warning图标
+let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '⚡'
+"在vim自带的状态栏中整合ale
+let g:ale_statusline_format = ['✗ %d', '⚡ %d', '✔ OK']
+"显示Linter名称,出错或警告等相关信息
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+"普通模式下，sp前往上一个错误或警告，sn前往下一个错误或警告
+nmap ep <Plug>(ale_previous_wrap)
+nmap en <Plug>(ale_next_wrap)
+"<Leader>s触发/关闭语法检查
+nmap <Leader>s :ALEToggle<CR>
+"<Leader>d查看错误或警告的详细信息
+nmap <Leader>d :ALEDetail<CR>
+
+" 关闭当前缓冲区----------------------------------------
+nmap ww :bdelete<CR>
+
+" vim-sneak---------------------------------------------
+map f <Plug>Sneak_s
+map F <Plug>Sneak_S
+
+" autorun-------------------------------------------------
+map <F5> :call CompileRunGcc()<CR>
+func! CompileRunGcc()
+        exec "w"
+        if &filetype == 'c'
+                exec "!g++ % -o %<"
+                exec "!time ./%<"
+        elseif &filetype == 'cpp'
+                exec "!g++ % -o %<"
+                exec "!time ./%<"
+        elseif &filetype == 'java'
+                exec "!javac %"
+                exec "!time java %<"
+        elseif &filetype == 'sh'
+                :!time bash %
+        elseif &filetype == 'python'
+                exec "!clear"
+                exec "!time python3 %"
+        elseif &filetype == 'html'
+                exec "!firefox % &"
+        elseif &filetype == 'go'
+                " exec "!go build %<"
+                exec "!time go run %"
+        elseif &filetype == 'mkd'
+                exec "!~/.vim/markdown.pl % > %.html &"
+                exec "!firefox %.html &"
+        endif
+endfunc
+
+" auto format-------------------------------------------
+nnoremap <F6> :Autoformat<CR>
+let g:autoformat_autoindent = 0
+let g:autoformat_retab = 0
+let g:autoformat_remove_trailing_spaces = 0
+
+" file is large from 1MB
+let g:LargeFile = 1024 * 1024 * 1
+augroup LargeFile
+autocmd BufReadPre * let f=getfsize(expand("<afile>")) | if f > g:LargeFile || f == -2 | call LargeFile() | endif
+augroup END
+function LargeFile()
+" no syntax highlighting etc
+set eventignore+=FileType
+" save memory when other file is viewed
+setlocal bufhidden=unload
+" is read-only (write with :w new_filename)
+setlocal buftype=nowrite
+" no undo possible
+setlocal undolevels=-1
+" display message
+autocmd VimEnter *  echo "The file is larger than " . (g:LargeFile / 1024 ) . " MB, so some options are changed (see .vimrc for details)."
+endfunction
+"以上的配置文件中，当文件大于1MB，不启动语法高亮在内的一切附加功能
