@@ -457,21 +457,3 @@ let g:autoformat_autoindent = 0
 let g:autoformat_retab = 0
 let g:autoformat_remove_trailing_spaces = 0
 
-" file is large from 1MB
-let g:LargeFile = 1024 * 1024 * 1
-augroup LargeFile
-autocmd BufReadPre * let f=getfsize(expand("<afile>")) | if f > g:LargeFile || f == -2 | call LargeFile() | endif
-augroup END
-function LargeFile()
-" no syntax highlighting etc
-set eventignore+=FileType
-" save memory when other file is viewed
-setlocal bufhidden=unload
-" is read-only (write with :w new_filename)
-setlocal buftype=nowrite
-" no undo possible
-setlocal undolevels=-1
-" display message
-autocmd VimEnter *  echo "The file is larger than " . (g:LargeFile / 1024 ) . " MB, so some options are changed (see .vimrc for details)."
-endfunction
-"以上的配置文件中，当文件大于1MB，不启动语法高亮在内的一切附加功能
