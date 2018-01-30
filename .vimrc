@@ -337,9 +337,11 @@ let g:pymode_lint_on_write = 1
 " E.g. "E501,W002", "E2,W" (Skip all Warnings and Errors that starts with E2) and etc
 let g:pymode_lint_ignore = "W"
 " Auto open cwindow (quickfix) if any errors have been found
-let g:pymode_lint_cwindow = 1
-let g:pymode_quickfix_minheight = 1
-let g:pymode_quickfix_maxheight = 3
+" let g:pymode_lint_cwindow = 1
+" let g:pymode_quickfix_minheight = 1
+" let g:pymode_quickfix_maxheight = 3
+let g:pymode_breakpoint = 1
+let g:pymode_breakpoint_bind = '<leader>b'
 " Turn on the rope script                                        *'g:pymode_rope'*
 let g:pymode_rope = 1
 " Enable searching for |.ropeproject| in parent directories
