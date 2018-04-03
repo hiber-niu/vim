@@ -62,6 +62,8 @@ Plug 'gcmt/wildfire.vim'
 
 Plug 'justinmk/vim-sneak'
 Plug 'Chiel92/vim-autoformat'
+" json"
+Plug 'wuhong40/vim-json-line-format'
 
 " color theme
 Plug 'altercation/vim-colors-solarized'
