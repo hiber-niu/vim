@@ -1,8 +1,7 @@
 " ============================================================================
 " auto install plug.vim
 if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
@@ -16,8 +15,6 @@ Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 " Code and files fuzzy finder
 Plug 'ctrlpvim/ctrlp.vim'
-" Git integration
-Plug 'tpope/vim-fugitive'
 " Tab list panel
 Plug 'kien/tabman.vim'
 " Airline
@@ -26,9 +23,9 @@ Plug 'vim-airline/vim-airline-themes'
 " Terminal Vim with 256 colors colorscheme
 Plug 'fisadev/fisa-vim-colorscheme'
 " Consoles as buffers
-Plug 'rosenfeld/conque-term'
+"Plug 'rosenfeld/conque-term'
 " Pending tasks list
-Plug 'fisadev/FixedTaskList.vim'
+"Plug 'fisadev/FixedTaskList.vim'
 " Surround
 Plug 'tpope/vim-surround'
 " table
@@ -58,12 +55,13 @@ Plug 'easymotion/vim-easymotion'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'luochen1990/rainbow'
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'gcmt/wildfire.vim'
+"Plug 'gcmt/wildfire.vim'
 
 Plug 'justinmk/vim-sneak'
 Plug 'Chiel92/vim-autoformat'
+Plug 'Shougo/neocomplete.vim'
 " json"
-Plug 'wuhong40/vim-json-line-format'
+Plug 'elzr/vim-json'
 
 " color theme
 Plug 'altercation/vim-colors-solarized'
@@ -82,8 +80,9 @@ language message zh_CN.UTF-8
 source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
 
-set fileencodings=ucs-bom,utf-8,cp936,gb2312,gb18030,big5,euc-jp,euc-kr,latin1,
-set guifont=Monospace\ 18
+set fileencodings=utf-bom,utf-8,cp936,gb2312,gb18030,big5,euc-jp,euc-kr,latin1,
+set enc=utf8
+set guifont=Monospace\ 14
 
 " tabs and spaces handling
 set expandtab
@@ -129,7 +128,7 @@ if has("gui_running")
     if has('win32')
         au GUIEnter * simalt ~x
     else
-        set lines=999 columns=999
+        set lines=300 columns=300
     endif
 endif
 
@@ -171,17 +170,17 @@ nmap ,wr :RecurGrepFast <cword><CR>
 " use 256 colors when possible
 if (&term =~? 'mlterm\|xterm\|xterm-256\|screen-256') || has('nvim')
 	let &t_Co = 256
-    colorscheme fisa
+    colorscheme molokai
 else
-    colorscheme delek
+    colorscheme molokai
 endif
 
 " colors for gvim
 if has('gui_running')
     "colorscheme wombat
-    colorscheme molokai
-    set background=dark
-    "colorscheme solarized
+    "colorscheme molokai
+    "set background=dark
+    colorscheme solarized
 endif
 
 " when scrolling, keep cursor 3 lines away from screen border
@@ -239,6 +238,29 @@ nmap ,t :NERDTreeFind<CR>
 " don;t show these file types
 let NERDTreeIgnore = ['\.pyc$', '\.pyo$']
 
+" nerdcommenter ------------------------"
+
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Set a language to use its alternate delimiters by default
+" let g:NERDAltDelims_java = 1
+
+" Add your own custom formats or override the defaults
+" let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
 "--------------------------------------------------------------------------------
 " 快速移动窗口
 "--------------------------------------------------------------------------------
@@ -252,29 +274,6 @@ map <C-h> <C-w><Left>
 " rainbow
 "--------------------------------------------------------------------------------
 let g:rainbow_active = 1
-let g:rainbow_conf = {
-    \   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
-    \   'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
-    \   'operators': '_,_',
-    \   'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
-    \   'separately': {
-    \       '*': {},
-    \       'tex': {
-    \           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
-    \       },
-    \       'lisp': {
-    \           'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
-    \       },
-    \       'vim': {
-    \           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
-    \       },
-    \       'html': {
-    \           'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
-    \       },
-    \       'css': 0,
-    \   }
-    \}
-
 " Tasklist ------------------------------
 
 " show pending tasks list
@@ -311,10 +310,6 @@ nmap ,wc :call CtrlPWithSearchText(expand('<cword>'), 'CmdPalette')<CR>
 " don't change working directory
 let g:ctrlp_working_path_mode = 0
 " ignore these files and folders on file finder
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/](\.git|\.hg|\.svn|node_modules)$',
-  \ 'file': '\.pyc$\|\.pyo$',
-  \ }
 
 " Python-mode ------------------------------
 let g:pymode = 1
@@ -325,7 +320,7 @@ let g:pymode_trim_whitespaces = 1
 let g:pymode_options = 1
 let g:pymode_python = 'python3'
 " Enable pymode folding                           
-let g:pymode_folding = 1
+let g:pymode_folding = 0
 " Enable pymode-motion                                         *'g:pymode_motion'*
 let g:pymode_motion = 1
 " Turn on the run code script                                     *'g:pymode_run'*
@@ -339,9 +334,10 @@ let g:pymode_lint_on_write = 1
 " E.g. "E501,W002", "E2,W" (Skip all Warnings and Errors that starts with E2) and etc
 let g:pymode_lint_ignore = "W"
 " Auto open cwindow (quickfix) if any errors have been found
-" let g:pymode_lint_cwindow = 1
-" let g:pymode_quickfix_minheight = 1
-" let g:pymode_quickfix_maxheight = 3
+let g:pymode_lint_cwindow = 1
+let g:pymode_quickfix_minheight = 1
+let g:pymode_quickfix_maxheight = 3
+
 let g:pymode_breakpoint = 1
 let g:pymode_breakpoint_bind = '<leader>b'
 " Turn on the rope script                                        *'g:pymode_rope'*
@@ -355,6 +351,11 @@ let g:pymode_rope_complete_on_dot = 1
 " Keymap for autocomplete                        *'g:pymode_rope_completion_bind'*
 let g:pymode_rope_completion_bind = '<C-Space>'
 let g:pymode_rope_goto_definition_bind = ',d'
+" 启用内置python文档，使用K进行查找
+let g:pymode_doc = 1
+let g:pymode_doc_bind = 'K'
+"python-mode设置了不自动换行显示，打开好
+au BufNewFile,BufRead *.py set wrap
 
 " Airline ------------------------------
 
@@ -390,6 +391,9 @@ augroup END
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:snips_author="hiber"
+let g:snips_email="niuhaibo@xiaomi.com"
+let g:snips_github="https://github.com/hiber-niu"
 
 " ale config---------------------------------------------
 " Check Python files with flake8 and pylint.
