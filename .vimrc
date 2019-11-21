@@ -10,7 +10,7 @@ call plug#begin('~/.vim/plugged')
 " Plugins from github repos:
 
 " Better file browser
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 " Code commenter
 Plug 'scrooloose/nerdcommenter'
 " Code and files fuzzy finder
@@ -30,8 +30,7 @@ Plug 'fisadev/fisa-vim-colorscheme'
 Plug 'tpope/vim-surround'
 " table
 Plug 'dhruvasagar/vim-table-mode'
-" Autoclose
-Plug 'Townk/vim-autoclose'
+Plug 'jiangmiao/auto-pairs'
 " Indent text object
 Plug 'michaeljsmith/vim-indent-object'
 " Handle TAB confilict of neocomplete and snippets
@@ -42,8 +41,7 @@ Plug 'klen/python-mode'
 " Better autocompletion
 " Plug 'Shougo/neocomplete.vim'
 " Snippets manager (SnipMate), dependencies, and snippets repo
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'w0rp/ale'
 " Paint css colors with the real color
 Plug 'lilydjwg/colorizer'
@@ -178,9 +176,9 @@ endif
 " colors for gvim
 if has('gui_running')
     "colorscheme wombat
-    "colorscheme molokai
+    colorscheme molokai
     "set background=dark
-    colorscheme solarized
+    "colorscheme solarized
 endif
 
 " when scrolling, keep cursor 3 lines away from screen border
