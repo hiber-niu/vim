@@ -96,7 +96,13 @@ source $VIMRUNTIME/menu.vim
 
 set fileencodings=utf-bom,utf-8,cp936,gb2312,gb18030,big5,euc-jp,euc-kr,latin1,
 set enc=utf8
-set guifont=Monospace\ 14
+
+if (g:islinux)
+    set guifont=Monospace\ 14
+else
+    set backspace=indent,eo1,start "避免backspace失效"
+    set guifont=Consolas:h16:cANSI
+endif
 
 " tabs and spaces handling
 set expandtab
