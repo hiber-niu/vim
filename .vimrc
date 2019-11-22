@@ -1,27 +1,42 @@
-" ============================================================================
-" auto install plug.vim
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+" -----------------------------------------------------------------------------
+"  < 判断操作系统是否是 Windows 还是 Linux >
+" -----------------------------------------------------------------------------
+let g:iswindows = 0
+let g:islinux = 0
+if(has("win32") || has("win64"))
+    let g:iswindows = 1
+else
+    let g:islinux = 1
 endif
 
-call plug#begin('~/.vim/plugged')
+" auto install plug.vim
+if (g:islinux)
+    if empty(glob('~/.vim/autoload/plug.vim'))
+      silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+      autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    endif
+    call plug#begin('~/.vim/plugged')
+else
+    call plug#begin('~/vimfiles/plugged')
+endif
+" windows
+" md ~\vimfiles\autoload
+" $uri = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+" (New-Object Net.WebClient).DownloadFile(
+"   $uri,
+"   $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath("~\vimfiles\autoload\plug.vim")
+" )
 
 " Plugins from github repos:
-
 " Better file browser
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 " Code commenter
 Plug 'scrooloose/nerdcommenter'
 " Code and files fuzzy finder
 Plug 'ctrlpvim/ctrlp.vim'
-" Tab list panel
-Plug 'kien/tabman.vim'
 " Airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-" Terminal Vim with 256 colors colorscheme
-Plug 'fisadev/fisa-vim-colorscheme'
 " Consoles as buffers
 "Plug 'rosenfeld/conque-term'
 " Pending tasks list
@@ -29,7 +44,7 @@ Plug 'fisadev/fisa-vim-colorscheme'
 " Surround
 Plug 'tpope/vim-surround'
 " table
-Plug 'dhruvasagar/vim-table-mode'
+" Plug 'dhruvasagar/vim-table-mode'
 Plug 'jiangmiao/auto-pairs'
 " Indent text object
 Plug 'michaeljsmith/vim-indent-object'
@@ -37,23 +52,22 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'ervandew/supertab'
 " Python mode (indentation, doc, refactor, lints, code checking, motion and
 " operators, highlighting, run and ipdb breakpoints)
-Plug 'klen/python-mode'
+Plug 'klen/python-mode', {'for': 'py'}
 " Better autocompletion
 " Plug 'Shougo/neocomplete.vim'
 " Snippets manager (SnipMate), dependencies, and snippets repo
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-Plug 'w0rp/ale'
+Plug 'w0rp/ale', {'for': 'py'}
 " Paint css colors with the real color
 Plug 'lilydjwg/colorizer'
 
 " XML/HTML tags navigation
-Plug 'vim-scripts/matchit.zip'
+Plug 'vim-scripts/matchit.zip', {'for': 'html'}
 " Yank history navigation
 Plug 'easymotion/vim-easymotion'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'luochen1990/rainbow'
 Plug 'nathanaelkane/vim-indent-guides'
-"Plug 'gcmt/wildfire.vim'
 
 Plug 'justinmk/vim-sneak'
 Plug 'Chiel92/vim-autoformat'
@@ -61,6 +75,8 @@ Plug 'Shougo/neocomplete.vim'
 " json"
 Plug 'elzr/vim-json'
 
+" markdown
+Plug 'godlygeek/tabular', {'for': 'md'} | Plug 'plasticboy/vim-markdown', {'for': 'md'}
 " color theme
 Plug 'altercation/vim-colors-solarized'
 Plug 'tomasr/molokai'
@@ -96,10 +112,11 @@ set incsearch
 " highlighted search results
 set hlsearch
 
+let g:vim_markdown_folding_disabled = 1
+
 "set autochdir "自动设置目录为正在编辑的文件所在的目录 
 "有些插件与这个命令会有冲突导致无法起作用，需要执行如下命令。
 autocmd BufEnter * lcd %:p:h
-
 
 " 删除文件尾部空行
 autocmd FileType ruby,python autocmd BufWritePre <buffer> :%s/\($\n\s*\)\+\%$//e
@@ -123,7 +140,7 @@ let autosave=30     " 30s自动保存
 
 " automaximize windo when startup
 if has("gui_running")
-    if has('win32')
+    if (g:iswindows)
         au GUIEnter * simalt ~x
     else
         set lines=300 columns=300
