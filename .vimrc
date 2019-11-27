@@ -54,7 +54,6 @@ Plug 'ervandew/supertab'
 " operators, highlighting, run and ipdb breakpoints)
 Plug 'klen/python-mode', {'for': 'py'}
 " Better autocompletion
-" Plug 'Shougo/neocomplete.vim'
 " Snippets manager (SnipMate), dependencies, and snippets repo
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'w0rp/ale', {'for': 'py'}
@@ -362,13 +361,13 @@ let g:pymode_quickfix_maxheight = 3
 let g:pymode_breakpoint = 1
 let g:pymode_breakpoint_bind = '<leader>b'
 " Turn on the rope script                                        *'g:pymode_rope'*
-let g:pymode_rope = 1
+let g:pymode_rope = 0
 " Enable searching for |.ropeproject| in parent directories
 let g:pymode_rope_lookup_project = 0
 " Turn on code completion support in the plugin       *'g:pymode_rope_completion'*
-let g:pymode_rope_completion = 1
+let g:pymode_rope_completion = 0
 " Turn on autocompletion when typing a period
-let g:pymode_rope_complete_on_dot = 1
+let g:pymode_rope_complete_on_dot = 0
 " Keymap for autocomplete                        *'g:pymode_rope_completion_bind'*
 let g:pymode_rope_completion_bind = '<C-Space>'
 let g:pymode_rope_goto_definition_bind = ',d'
