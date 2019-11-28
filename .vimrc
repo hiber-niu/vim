@@ -70,9 +70,11 @@ Plug 'nathanaelkane/vim-indent-guides'
 
 Plug 'justinmk/vim-sneak'
 Plug 'Chiel92/vim-autoformat'
-Plug 'Shougo/neocomplete.vim'
 " json"
 Plug 'elzr/vim-json'
+
+" python 
+Plug 'davidhalter/jedi-vim'
 
 " markdown
 Plug 'godlygeek/tabular', {'for': 'md'} | Plug 'plasticboy/vim-markdown', {'for': 'md'}
