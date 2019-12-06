@@ -119,8 +119,6 @@ set incsearch
 " highlighted search results
 set hlsearch
 
-let g:vim_markdown_folding_disabled = 1
-
 "set autochdir "自动设置目录为正在编辑的文件所在的目录 
 "有些插件与这个命令会有冲突导致无法起作用，需要执行如下命令。
 autocmd BufEnter * lcd %:p:h
@@ -153,6 +151,17 @@ if has("gui_running")
         set lines=300 columns=300
     endif
 endif
+
+
+" ==============Json=========
+setlocal foldmethod=syntax
+command! Jsonf :execute '%!python -m json.tool'
+  \ | :execute '%!python -c "import re,sys;sys.stdout.write(re.sub(r\"\\\u[0-9a-f]{4}\", lambda m:m.group().decode(\"unicode_escape\").encode(\"utf-8\"), sys.stdin.read()))"'
+"
+" ========================
+" markdown
+let g:vim_markdown_folding_disabled = 1
+set conceallevel=2
 
 "--------------------------------------------------------------------------------
 " The-NERD-Commenter的设置
